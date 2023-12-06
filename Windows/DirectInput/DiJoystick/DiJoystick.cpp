@@ -134,16 +134,16 @@ static BOOL CALLBACK DIEnumDevicesCallback(LPCDIDEVICEINSTANCE lpddi, LPVOID pvR
 						wprintf(L"\t\tHardwareRevision     : %d\n", diDevCaps.dwHardwareRevision);	
 						wprintf(L"\n");
 
+						if(DEBUG_JOY){
+							for(;;) {
+								update(lpddi->tszProductName, did, diDevCaps.dwButtons, diDevCaps.dwAxes, diDevCaps.dwPOVs);
+								std::this_thread::sleep_for(std::chrono::milliseconds(2));
+							}
+						}
+						
 					}else{
 						wprintf(L"GetCapabilities FAILED\n");
-					}
-					
-					if(DEBUG_JOY){
-						for(;;) {
-							update(lpddi->tszProductName, did, diDevCaps.dwButtons, diDevCaps.dwAxes, diDevCaps.dwPOVs);
-							std::this_thread::sleep_for(std::chrono::milliseconds(2));
-						}
-					}
+					}					
 
 				}else{
 					wprintf(L"SetDataFormat FAILED\n");
